@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  countriesData : "https://restcountries.eu/rest/v2/all",
+  baseUrl : "https://tekdi-challenges.appspot.com/api/People"
 };
 
 /*

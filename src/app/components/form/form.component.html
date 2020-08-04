@@ -1,0 +1,194 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="empDetails">Person's Details</div>
+
+                <form class="form" [formGroup]="peopleForm" (ngSubmit)="onSubmit($event)">
+                    <!-- 
+                    <input type="number" formControlName="id" class="form-control" style="display: none;" disabled> -->
+
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                            [class.is-invalid]="peopleForm.get('name').invalid && peopleForm.get('name').touched">
+
+                        <span class="help-block" *ngIf="peopleForm.get('name').errors &&
+                        (peopleForm.get('name').touched || peopleForm.get('name').dirty)">
+                            <span *ngIf="peopleForm.get('name').errors.required">
+                                Full Name is required
+                            </span>
+                            <span *ngIf="peopleForm.get('name').errors.minlength">
+                                Full name must be greater than 3 characters.
+                            </span>
+                        </span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" formControlName="email" class="form-control" placeholder="Email"
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            [class.is-invalid]="peopleForm.get('email').invalid && peopleForm.get('email').touched">
+
+                        <span class="help-block" *ngIf="peopleForm.get('email').errors &&
+                            (peopleForm.get('email').touched || peopleForm.get('email').dirty)">
+                            <span *ngIf="peopleForm.get('email').errors.required">
+                                Email is required
+                            </span>
+                            <span *ngIf="peopleForm.get('email').errors.minlength">
+                                Please enter a valid email ID.
+                            </span>
+                        </span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth:</label>
+                        <input type="date" formControlName="dob" class="form-control" placeholder="YYYY-MM-DD" 
+                            [class.is-invalid]="peopleForm.get('dob').invalid && peopleForm.get('dob').touched">
+
+                        <span class="help-block" *ngIf="peopleForm.get('dob').errors &&
+                        (peopleForm.get('dob').touched || peopleForm.get('dob').dirty)">
+                            <span *ngIf="peopleForm.get('dob').errors.required">
+                                Date of birth is required
+                            </span>
+                        </span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Avatar:</label>
+                        <div class="image-upload">
+                            <img [src]="imageSrc" accept="image/gif, image/jpeg, image/png, image/bmp"
+                                class="uploadImage" />
+                            <input name="imageUrl" formControlName="avatar" (value)="imageSrc" type="file"
+                                accept="image/*" (change)="handleInputChange($event)" />
+                        </div>
+                    </div>
+
+                    <label>Select Country:</label>
+                    <!-- <mat-form-field appearance="fill">
+                        <mat-label formControlName="country">Select Country</mat-label>
+                        <mat-select>
+                            <mat-option [value]="country.name" *ngFor="let country of countries">
+                                {{country.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="form-group">
+                        <select formControlName="country">
+                            <option value="" selected disabled>Please select</option>
+                            <option [value]="country.name" *ngFor="let country of countries"> 
+                                {{country.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" [disabled]="!peopleForm.valid">Register</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Employee Details -->
+<div class="details">
+    <div class="container">
+        <div class="empDetails">
+            Detail List
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3" *ngFor="let p_list of person_list">
+
+
+                <div class="card" style="width: 18rem;">
+                    <img #avatar [attr.avatar]="p_list.avatar" src={{p_list.avatar}} class="card-img-top">
+
+                    <a class="action-btn editIcon" (click)="onEdit(id, name, email, dob, country, avatar)">
+                        <i class="material-icons">edit</i>
+                    </a>
+
+                    <div class="card-body">
+                        <div #id [attr.id]="p_list.id">
+                            <span class="cardInputs">
+                                ID :
+                            </span>{{p_list.id}}
+                        </div>
+                        <div #name [attr.name]="p_list.name">
+                            <span class="cardInputs">
+                                Name :
+                            </span>
+                            {{p_list.name}}
+                        </div>
+                        <div #email [attr.email]="p_list.email">
+                            <span class="cardInputs">
+                                Email :
+                            </span>
+                            {{p_list.email}}
+                        </div>
+                        <div #dob [attr.dob]="p_list.dob">
+                            <span class="cardInputs">
+                                Age :
+                            </span>
+                            {{p_list.dob | age }}
+                        </div>
+                        <div #country [attr.country]="p_list.country">
+                            <span class="cardInputs">
+                                Country :
+                            </span>
+                            {{p_list.country}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!--
+<table class="responsive-table highlight">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Country</th>
+            <th>Avatar</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+
+    <tr *ngFor="let p_list of person_list">
+        <td>{{p_list.name}}</td>
+        <td>{{p_list.email}}</td>
+        <td>{{p_list.dob | age }}</td>
+        <td>{{p_list.country}}</td>
+        <td>
+            <a href="{{p_list.avatar}}" target="_blank">
+                {{p_list.avatar}}
+            </a>
+        </td>
+        <td>
+            <a class="action-btn" (click)="onEdit(person)">
+                <i class="material-icons">edit</i>
+            </a>
+            <a class="action-btn" (click)="onDelete(person._id, peopleForm)">
+                <i class="material-icons">delete</i>
+            </a>
+        </td>
+    </tr>
+</table>
+-->
