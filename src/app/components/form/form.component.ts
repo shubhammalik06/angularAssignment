@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
     this.personList();
 
     this.peopleForm = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      name: new FormControl('', [Validators.required,Validators.pattern("/^[A-Za-z]+$/"), Validators.minLength(2), Validators.maxLength(20)]),
       email: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       dob: new FormControl('', [Validators.required]),
       avatar: new FormControl(''),
