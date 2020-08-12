@@ -27,6 +27,7 @@ export class FormComponent implements OnInit {
   country;
   avatar;
   edit;
+  text1;
 
   constructor(private fb: FormBuilder, public service: FormService,
     private cd: ChangeDetectorRef) {
@@ -39,7 +40,7 @@ export class FormComponent implements OnInit {
     this.personList();
 
     this.peopleForm = this.fb.group({
-      name: new FormControl('', [Validators.required,Validators.pattern("/^[A-Za-z]+$/"), Validators.minLength(2), Validators.maxLength(20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z][a-zA-Z ]+"), Validators.minLength(2), Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       dob: new FormControl('', [Validators.required]),
       avatar: new FormControl(''),
@@ -50,7 +51,6 @@ export class FormComponent implements OnInit {
   get primEmail() {
     return this.peopleForm.get('email')
   }
-
 
   // base 64 conversion of image
   handleInputChange(e) {

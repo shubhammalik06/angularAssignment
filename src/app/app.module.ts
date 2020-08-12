@@ -20,6 +20,8 @@ import {MatTableModule} from '@angular/material/table';
 
 import { AgePipe } from './shared/age.pipe';
 
+import { peopleGuardService } from './shared/people-guard.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,7 @@ import { AgePipe } from './shared/age.pipe';
     MatSelectModule,
     MatTableModule
   ],
-  providers: [FormService, httpInterceptProviders],
+  providers: [FormService, httpInterceptProviders, peopleGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
